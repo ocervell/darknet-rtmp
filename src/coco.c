@@ -367,6 +367,8 @@ void run_coco(int argc, char **argv)
 	int dont_show = find_arg(argc, argv, "-dont_show");
 	int mjpeg_port = find_int_arg(argc, argv, "-mjpeg_port", -1);
     int json_port = find_int_arg(argc, argv, "-json_port", -1);
+	int rtmp_stream_fps = find_int_arg(argc, argv, "-rtmp_fps", -1);
+	int rtmp_stream_bps = find_int_arg(argc, argv, "-rtmp_bps", -1);
 	char *out_filename = find_char_arg(argc, argv, "-out_filename", 0);
     char *prefix = find_char_arg(argc, argv, "-prefix", 0);
     float thresh = find_float_arg(argc, argv, "-thresh", .2);
@@ -388,5 +390,5 @@ void run_coco(int argc, char **argv)
     else if(0==strcmp(argv[2], "valid")) validate_coco(cfg, weights);
     else if(0==strcmp(argv[2], "recall")) validate_coco_recall(cfg, weights);
     else if(0==strcmp(argv[2], "demo")) demo(cfg, weights, thresh, hier_thresh, cam_index, filename, coco_classes, 80, frame_skip,
-		prefix, out_filename, mjpeg_port, json_port, dont_show, ext_output, 0);
+		prefix, out_filename, http_stream_port, json_port, dont_show, rtmp_stream_fps, rtmp_stream_bps, ext_output, 0);
 }

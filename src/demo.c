@@ -18,6 +18,11 @@
 #ifdef OPENCV
 
 #include "http_stream.h"
+<<<<<<< HEAD
+=======
+#include "rtmp_stream.h"
+image get_image_from_stream(CvCapture *cap);
+>>>>>>> c705014... add rtmp features and options
 
 static char **demo_names;
 static image **demo_alphabet;
@@ -104,7 +109,7 @@ double get_wall_time()
 }
 
 void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int cam_index, const char *filename, char **names, int classes,
-    int frame_skip, char *prefix, char *out_filename, int mjpeg_port, int json_port, int dont_show, int ext_output, int letter_box_in)
+    int frame_skip, char *prefix, char *out_filename, int mjpeg_port, int json_port, int rtmp_stream_fps, int rtmp_stream_bps, int dont_show, int ext_output, int letter_box_in)
 {
     letter_box = letter_box_in;
     in_img = det_img = show_img = NULL;
@@ -182,7 +187,19 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
         create_window_cv("Demo", full_screen, 1352, 1013);
     }
 
+		printf("detect size : w: %d, h: %d \n", det_img->width, det_img->height);
+		int inputFps = 15;
+		int inputBitrate = 2000000;
 
+		if (rtmp_stream_fps >0) {
+				inputFps = rtmp_stream_fps;
+		}
+		if (rtmp_stream_bps >0) {
+				inputBitrate = rtmp_stream_bps;
+		}
+
+		const char* output_url = "rtmp://localhost/live/darknet";
+		init_rtmp_server(det_img->width, det_img->height, inputFps, inputBitrate, "main", output_url);
     write_cv* output_video_writer = NULL;
     if (out_filename && !flag_exit)
     {
@@ -266,6 +283,10 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
                 printf("\n cvWriteFrame \n");
             }
 
+						if (show_img) {
+								send_rtmp_frame(show_img);
+						}
+
             release_mat(&show_img);
 
             pthread_join(fetch_thread, 0);
@@ -322,7 +343,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 }
 #else
 void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int cam_index, const char *filename, char **names, int classes,
-    int frame_skip, char *prefix, char *out_filename, int mjpeg_port, int json_port, int dont_show, int ext_output, int letter_box_in)
+    int frame_skip, char *prefix, char *out_filename, int mjpeg_port, int json_port, int rtmp_stream_fps, int rtmp_stream_bps, int dont_show, int ext_output, int letter_box_in)
 {
     fprintf(stderr, "Demo needs OpenCV for webcam images.\n");
 }

@@ -1,11 +1,12 @@
-GPU=0
-CUDNN=0
+GPU=1
+CUDNN=1
 CUDNN_HALF=0
-OPENCV=0
+OPENCV=1
 AVX=0
 OPENMP=0
 LIBSO=0
 ZED_CAMERA=0
+FFMPEG=1
 
 # set GPU=1 and CUDNN=1 to speedup on GPU
 # set CUDNN_HALF=1 to further speedup 3 x times (Mixed-precision on Tensor Cores) GPU: Volta, Xavier, Turing and higher
@@ -34,7 +35,7 @@ OS := $(shell uname)
 # ARCH= -gencode arch=compute_61,code=sm_61 -gencode arch=compute_61,code=compute_61
 
 # GP100/Tesla P100 - DGX-1
-# ARCH= -gencode arch=compute_60,code=sm_60
+ARCH= -gencode arch=compute_60,code=sm_60
 
 # For Jetson TX1, Tegra X1, DRIVE CX, DRIVE PX - uncomment:
 # ARCH= -gencode arch=compute_53,code=[sm_53,compute_53]
@@ -80,6 +81,12 @@ LDFLAGS+= `pkg-config --libs opencv`
 COMMON+= `pkg-config --cflags opencv`
 endif
 
+ifeq ($(FFMPEG), 1)
+CFLAGS+= -DFFMPEG
+LDFLAGS+= -lavformat -lavcodec -lswresample -lswscale -lavutil -lm
+#COMMON+= -lavformat -lavcodec -lswresample -lswscale -lavutil -lm
+endif
+
 ifeq ($(OPENMP), 1)
 CFLAGS+= -fopenmp
 LDFLAGS+= -lgomp
@@ -115,12 +122,12 @@ endif
 ifeq ($(ZED_CAMERA), 1)
 CFLAGS+= -DZED_STEREO -I/usr/local/zed/include
 LDFLAGS+= -L/usr/local/zed/lib -lsl_core -lsl_input -lsl_zed
-#-lstdc++ -D_GLIBCXX_USE_CXX11_ABI=0 
+#-lstdc++ -D_GLIBCXX_USE_CXX11_ABI=0
 endif
 
-OBJ=image_opencv.o http_stream.o gemm.o utils.o dark_cuda.o convolutional_layer.o list.o image.o activations.o im2col.o col2im.o blas.o crop_layer.o dropout_layer.o maxpool_layer.o softmax_layer.o data.o matrix.o network.o connected_layer.o cost_layer.o parser.o option_list.o darknet.o detection_layer.o captcha.o route_layer.o writing.o box.o nightmare.o normalization_layer.o avgpool_layer.o coco.o dice.o yolo.o detector.o layer.o compare.o classifier.o local_layer.o swag.o shortcut_layer.o activation_layer.o rnn_layer.o gru_layer.o rnn.o rnn_vid.o crnn_layer.o demo.o tag.o cifar.o go.o batchnorm_layer.o art.o region_layer.o reorg_layer.o reorg_old_layer.o super.o voxel.o tree.o yolo_layer.o upsample_layer.o lstm_layer.o conv_lstm_layer.o scale_channels_layer.o sam_layer.o
-ifeq ($(GPU), 1) 
-LDFLAGS+= -lstdc++ 
+OBJ=image_opencv.o rtmp_stream.o http_stream.o gemm.o utils.o dark_cuda.o convolutional_layer.o list.o image.o activations.o im2col.o col2im.o blas.o crop_layer.o dropout_layer.o maxpool_layer.o softmax_layer.o data.o matrix.o network.o connected_layer.o cost_layer.o parser.o option_list.o darknet.o detection_layer.o captcha.o route_layer.o writing.o box.o nightmare.o normalization_layer.o avgpool_layer.o coco.o dice.o yolo.o detector.o layer.o compare.o classifier.o local_layer.o swag.o shortcut_layer.o activation_layer.o rnn_layer.o gru_layer.o rnn.o rnn_vid.o crnn_layer.o demo.o tag.o cifar.o go.o batchnorm_layer.o art.o region_layer.o reorg_layer.o reorg_old_layer.o super.o voxel.o tree.o yolo_layer.o upsample_layer.o lstm_layer.o conv_lstm_layer.o scale_channels_layer.o sam_layer.o
+ifeq ($(GPU), 1)
+LDFLAGS+= -lstdc++
 OBJ+=convolutional_kernels.o activation_kernels.o im2col_kernels.o col2im_kernels.o blas_kernels.o crop_layer_kernels.o dropout_layer_kernels.o maxpool_layer_kernels.o network_kernels.o avgpool_layer_kernels.o
 endif
 

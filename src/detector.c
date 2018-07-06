@@ -1431,6 +1431,8 @@ void run_detector(int argc, char **argv)
     int show_imgs = find_arg(argc, argv, "-show_imgs");
     int mjpeg_port = find_int_arg(argc, argv, "-mjpeg_port", -1);
     int json_port = find_int_arg(argc, argv, "-json_port", -1);
+    int rtmp_stream_fps = find_int_arg(argc, argv, "-rtmp_fps", -1);
+    int rtmp_stream_bps = find_int_arg(argc, argv, "-rtmp_bps", -1);
     char *out_filename = find_char_arg(argc, argv, "-out_filename", 0);
     char *outfile = find_char_arg(argc, argv, "-out", 0);
     char *prefix = find_char_arg(argc, argv, "-prefix", 0);
@@ -1498,7 +1500,7 @@ void run_detector(int argc, char **argv)
             if (strlen(filename) > 0)
                 if (filename[strlen(filename) - 1] == 0x0d) filename[strlen(filename) - 1] = 0;
         demo(cfg, weights, thresh, hier_thresh, cam_index, filename, names, classes, frame_skip, prefix, out_filename,
-            mjpeg_port, json_port, dont_show, ext_output, letter_box);
+            mjpeg_port, json_port, rtmp_stream_fps, rtmp_stream_bps, dont_show, ext_output, letter_box);
 
         free_list_contents_kvp(options);
         free_list(options);

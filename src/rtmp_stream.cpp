@@ -146,7 +146,7 @@ void write_frame(AVCodecContext *codec_ctx, AVFormatContext *fmt_ctx, AVFrame *f
 void send_rtmp_frame(mat_cv* show_img)
 {
     // cv::Mat image = cv::cvarrToMat(ipl);
-    cv::Mat *image = show_img;
+    cv::Mat image = show_img;
     const int stride[] = {static_cast<int>(image.step[0])};
     sws_scale(swsctx, &image.data, stride, 0, image.rows, frame->data, frame->linesize);
     frame->pts += av_rescale_q(1, out_codec_ctx->time_base, out_stream->time_base);

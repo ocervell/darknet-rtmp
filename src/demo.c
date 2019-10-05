@@ -198,7 +198,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 		}
 
 
-		const char* output_url = "rtmp://localhost/live/darknet";
+		const char* output_url = "rtmp://localhost/play";
 		init_rtmp_server(det_img_w, det_img_h, inputFps, inputBitrate, "main", output_url);
     write_cv* output_video_writer = NULL;
     if (out_filename && !flag_exit)

@@ -184,14 +184,14 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
         create_window_cv("Demo", full_screen, 1352, 1013);
     }
 
-		printf("detect size : w: %d, h: %d \n", det_img->width, det_img->height);
+		printf("detect size : w: %d, h: %d \n", *det_img.width, *det_img.height);
 		int inputFps = 15;
 		int inputBitrate = 2000000;
 
-		if (rtmp_stream_fps >0) {
+		if (rtmp_stream_fps > 0) {
 				inputFps = rtmp_stream_fps;
 		}
-		if (rtmp_stream_bps >0) {
+		if (rtmp_stream_bps > 0) {
 				inputBitrate = rtmp_stream_bps;
 		}
 

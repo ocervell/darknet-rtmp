@@ -140,10 +140,9 @@ void write_frame(AVCodecContext *codec_ctx, AVFormatContext *fmt_ctx, AVFrame *f
   av_packet_unref(&pkt);
 }
 
-void send_rtmp_frame(IplImage* ipl)
+void send_rtmp_frame(mat_cv* image)
 {
-    cv::Mat image = cv::cvarrToMat(ipl);
-
+    // cv::Mat image = cv::cvarrToMat(ipl);
     const int stride[] = {static_cast<int>(image.step[0])};
     sws_scale(swsctx, &image.data, stride, 0, image.rows, frame->data, frame->linesize);
     frame->pts += av_rescale_q(1, out_codec_ctx->time_base, out_stream->time_base);
@@ -178,7 +177,7 @@ void init_rtmp_server(double width, double height, int fps, int bitrate, char *c
   av_dump_format(ofmt_ctx, 0, output, 1);
 
   swsctx = initialize_sample_scaler(out_codec_ctx, width, height);
-  frame = allocate_frame_buffer(out_codec_ctx, width, height);  
+  frame = allocate_frame_buffer(out_codec_ctx, width, height);
 
   int cur_size;
   uint8_t *cur_ptr;
@@ -192,7 +191,7 @@ void init_rtmp_server(double width, double height, int fps, int bitrate, char *c
 
 }
 
-void DoRelese() 
+void DoRelese()
 {
   av_write_trailer(ofmt_ctx);
   av_frame_free(&frame);

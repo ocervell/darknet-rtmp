@@ -63,6 +63,7 @@ using std::endl;
 #endif    // CV_VERSION_EPOCH
 
 #include "http_stream.h"
+#include "rtmp_stream.h"
 
 #ifndef CV_RGB
 #define CV_RGB(r, g, b) cvScalar( (b), (g), (r), 0 )

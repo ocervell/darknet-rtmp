@@ -140,7 +140,7 @@ void write_frame(AVCodecContext *codec_ctx, AVFormatContext *fmt_ctx, AVFrame *f
   av_packet_unref(&pkt);
 }
 
-void send_rtmp_frame(mat_cv* image)
+void send_rtmp_frame(cv::Mat image)
 {
     // cv::Mat image = cv::cvarrToMat(ipl);
     const int stride[] = {static_cast<int>(image.step[0])};

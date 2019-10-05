@@ -19,7 +19,6 @@
 
 #include "http_stream.h"
 #include "rtmp_stream.h"
-// image get_image_from_stream(CvCapture *cap);
 
 static char **demo_names;
 static image **demo_alphabet;
@@ -236,17 +235,17 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             //printf("\033[1;1H");
             //printf("\nFPS:%.1f\n", fps);
             printf("Objects:\n\n");
+						printf("\nFPS:%.1f\n", fps);
 
             ++frame_id;
-            if (demo_json_port > 0) {
-                int timeout = 400000;
-                send_json(local_dets, local_nboxes, l.classes, demo_names, frame_id, demo_json_port, timeout);
-            }
 
             draw_detections_cv_v3(show_img, local_dets, local_nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes, demo_ext_output);
             free_detections(local_dets, local_nboxes);
 
-            printf("\nFPS:%.1f\n", fps);
+						if (demo_json_port > 0) {
+                int timeout = 400000;
+                send_json(local_dets, local_nboxes, l.classes, demo_names, frame_id, demo_json_port, timeout);
+            }
 
             if(!prefix){
                 if (!dont_show) {

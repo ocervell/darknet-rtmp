@@ -195,8 +195,11 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 				inputBitrate = rtmp_stream_bps;
 		}
 
+    int det_img_h = get_height_mat(src);
+    int det_img_w = get_width_mat(src);
+
 		const char* output_url = "rtmp://localhost/live/darknet";
-		init_rtmp_server(det_img->width, det_img->height, inputFps, inputBitrate, "main", output_url);
+		init_rtmp_server(det_img_w, det_img_h, inputFps, inputBitrate, "main", output_url);
     write_cv* output_video_writer = NULL;
     if (out_filename && !flag_exit)
     {

@@ -19,7 +19,7 @@
 
 #include "http_stream.h"
 #include "rtmp_stream.h"
-image get_image_from_stream(CvCapture *cap);
+// image get_image_from_stream(CvCapture *cap);
 
 static char **demo_names;
 static image **demo_alphabet;

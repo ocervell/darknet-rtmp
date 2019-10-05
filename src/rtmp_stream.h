@@ -12,7 +12,7 @@ void init_rtmp_server(double width, double height, int fps, int bitrate, char *c
 
 #ifdef OPENCV
 
-void send_rtmp_frame(mat_cv* image);
+void send_rtmp_frame(mat_cv* mat);
 
 #endif
 

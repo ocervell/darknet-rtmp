@@ -143,7 +143,7 @@ void write_frame(AVCodecContext *codec_ctx, AVFormatContext *fmt_ctx, AVFrame *f
   av_packet_unref(&pkt);
 }
 
-void send_rtmp_frame(mat_cv* show_img)
+void send_rtmp_frame(mat_cv* mat)
 {
     // cv::Mat image = cv::cvarrToMat(ipl);
     cv::Mat *show_img = mat;

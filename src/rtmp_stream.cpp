@@ -26,6 +26,9 @@ AVCodecContext *out_codec_ctx = NULL;
 SwsContext *swsctx = NULL;
 AVFrame *frame = NULL;
 
+struct mat_cv : cv::Mat { int a[0]; };
+
+
 void initialize_avformat_context(AVFormatContext *&fctx, const char *format_name)
 {
   int ret = avformat_alloc_output_context2(&fctx, NULL, format_name, NULL);
@@ -140,9 +143,10 @@ void write_frame(AVCodecContext *codec_ctx, AVFormatContext *fmt_ctx, AVFrame *f
   av_packet_unref(&pkt);
 }
 
-void send_rtmp_frame(cv::Mat image)
+void send_rtmp_frame(mat_cv* show_img)
 {
     // cv::Mat image = cv::cvarrToMat(ipl);
+    cv::Mat *image = show_img;
     const int stride[] = {static_cast<int>(image.step[0])};
     sws_scale(swsctx, &image.data, stride, 0, image.rows, frame->data, frame->linesize);
     frame->pts += av_rescale_q(1, out_codec_ctx->time_base, out_stream->time_base);

@@ -184,8 +184,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
         create_window_cv("Demo", full_screen, 1352, 1013);
     }
 
-    int det_img_h = get_height_mat(src);
-    int det_img_w = get_width_mat(src);
+    int det_img_h = get_height_mat(det_img);
+    int det_img_w = get_width_mat(det_img);
 		printf("detect size : w: %d, h: %d \n", det_img_w, det_img_h);
 		int inputFps = 15;
 		int inputBitrate = 2000000;

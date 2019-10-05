@@ -17,7 +17,7 @@ This repository's fork history is:
 This repo has  the following options set in the `Makefile`:
 
 * `GPU=1` to enable GPU computations (fast !!!)
-* `OPENCV=1` to enable OpenCV (tested with OpenCV 3.x and higher).
+* `OPENCV=1` to enable OpenCV (tested with OpenCV 4.1).
 * `CUDNN=1` to enable CUDA.
 
 Feel free to change those settings at your own peril :)

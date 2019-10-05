@@ -184,7 +184,9 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
         create_window_cv("Demo", full_screen, 1352, 1013);
     }
 
-		printf("detect size : w: %d, h: %d \n", det_img.width, det_img.height);
+    int det_img_h = get_height_mat(src);
+    int det_img_w = get_width_mat(src);
+		printf("detect size : w: %d, h: %d \n", det_img_w, det_img_h);
 		int inputFps = 15;
 		int inputBitrate = 2000000;
 
@@ -195,8 +197,6 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
 				inputBitrate = rtmp_stream_bps;
 		}
 
-    int det_img_h = get_height_mat(src);
-    int det_img_w = get_width_mat(src);
 
 		const char* output_url = "rtmp://localhost/live/darknet";
 		init_rtmp_server(det_img_w, det_img_h, inputFps, inputBitrate, "main", output_url);

@@ -18,11 +18,8 @@
 #ifdef OPENCV
 
 #include "http_stream.h"
-<<<<<<< HEAD
-=======
 #include "rtmp_stream.h"
 image get_image_from_stream(CvCapture *cap);
->>>>>>> c705014... add rtmp features and options
 
 static char **demo_names;
 static image **demo_alphabet;
